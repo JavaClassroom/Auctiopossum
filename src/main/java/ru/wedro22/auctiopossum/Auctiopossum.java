@@ -3,6 +3,7 @@ package ru.wedro22.auctiopossum;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 import ru.wedro22.auctiopossum.blocks.Auctionator;
 
 @Mod(modid = Auctiopossum.MODID, version = Auctiopossum.VERSION)
@@ -17,6 +18,6 @@ public class Auctiopossum
 		// some example code
         System.out.println("Auctiopossum load");
 
-        Auctionator.setRegistry();
+        GameRegistry.registerBlock(new Auctionator(), "auctionator");
     }
 }
