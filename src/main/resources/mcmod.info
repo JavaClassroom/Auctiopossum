@@ -1,16 +1,11 @@
 [
 {
   "modid": "auctiopossum",
-  "name": "auctiopossum",
+  "name": "Auctiopossum",
   "description": "Auction",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
-  "authorList": ["wedro2208"],
-  "credits": "",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": []
+  "authorList": ["wedro22", "@8RO113R"],
+  "credits": "Andrey96"
 }
 ]

@@ -1,10 +1,12 @@
-package ru.wedro22.auctiopossum;
+package wedro22.auctiopossum;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import ru.wedro22.auctiopossum.blocks.Auctionator;
+import net.minecraft.command.CommandBase;
+import wedro22.auctiopossum.blocks.Auctionator;
 
 @Mod(modid = Auctiopossum.MODID, version = Auctiopossum.VERSION)
 public class Auctiopossum
@@ -15,9 +17,15 @@ public class Auctiopossum
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-		// some example code
-        System.out.println("Auctiopossum load");
-
+        //регистрация блоков мода
         GameRegistry.registerBlock(new Auctionator(), "auctionator");
+    }
+
+    @EventHandler
+    public void servStarting(FMLServerStartingEvent event){
+        //регистрация команд в чате
+        for (CommandBase command : Control.commands) {
+            event.registerServerCommand(command);
+        }
     }
 }
