@@ -18,7 +18,7 @@ public class Auctiopossum
     public void init(FMLInitializationEvent event)
     {
         //регистрация блоков мода
-        GameRegistry.registerBlock(new Auctionator(), "auctionator");
+        GameRegistry.registerBlock(Auctionator.get(), "auctionator");
     }
 
     @EventHandler
