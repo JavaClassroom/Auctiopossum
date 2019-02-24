@@ -5,26 +5,12 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
-import java.util.Arrays;
-
 public class InventoryAuc implements IInventory {
 
     private ItemStack[] stackLeft;
         /** список предметов слева */
         public ItemStack[] getStackLeft() {
             return stackLeft;
-        }
-
-    private ItemStack[] stackRight;
-        /** список предметов справа */
-        public ItemStack[] getStackRight() {
-            return stackRight;
-        }
-        /** создать список предметов справа */
-        public ItemStack[] setStackRight(ItemStack[] items) {
-            stackRight = new ItemStack[items.length];
-            stackRight = Arrays.copyOf(items, items.length);
-            return stackRight;
         }
 
     private Container eventHandler;
@@ -35,7 +21,6 @@ public class InventoryAuc implements IInventory {
      */
     public InventoryAuc(Container container, int slots_number){
         stackLeft = new ItemStack[slots_number];
-        stackRight = new ItemStack[slots_number];
         eventHandler = container;
     }
 
@@ -99,14 +84,6 @@ public class InventoryAuc implements IInventory {
     public void setInventorySlotContents(int index, ItemStack stack) {
         stackLeft[index] = stack;
         eventHandler.onCraftMatrixChanged(this);
-        /* АЛЬТЕРНАТИВА
-        this.inventory.set(index, stack);
-        if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
-
-            stack.setCount(this.getInventoryStackLimit());
-        }
-        this.markDirty();
-         */
     }
 
     /** имя контейнера */
@@ -124,7 +101,7 @@ public class InventoryAuc implements IInventory {
     /** максимальный размер стака в слоте */
     @Override
     public int getInventoryStackLimit() {
-        return 4096;   //64*64
+        return 64;
     }
 
     /** для tile entitie, не надо */
@@ -155,36 +132,4 @@ public class InventoryAuc implements IInventory {
         return true;
     }
 
-    //АЛЬТЕРНАТИВА
-
-    /**
-     * Этот метод будет вызываться при сохранении инфы в НБТ КАПы, чтобы, например при перезаходе предметы не пропали из инвентаря
-     * @param compound
-     */
-    /*public void writeToNBT(NBTTagCompound compound) {
-
-        ItemStackHelper.saveAllItems(compound, this.inventory);
-    }*/
-
-    /**
-     * Этот метод будет вызываться при чтении инфы из НБТ КАПы. Достаем из НБТ КАПы стаки и заполняем инвентарь
-     * @param compound
-     */
-    /*public void readFromNBT(NBTTagCompound compound) {
-
-        this.inventory = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, this.inventory);
-    }*/
-
-    /**
-     * Копируем стаки из другого инвентаря в этот. Используется в PlayerEvent.Clone Event, да бы сохранить содержимое инвентаря, например когда игрок проходит через портал в Энд
-     * @param inv
-     */
-    /*public void copy(CustomInventory inv) {
-
-        for (int i = 0; i < inv.getSizeInventory(); ++i) {
-            ItemStack stack = inv.getStackInSlot(i);
-            inventory.set(i, (stack.isEmpty() ? ItemStack.EMPTY : stack.copy()));
-        }
-    }*/
 }

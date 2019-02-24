@@ -2,6 +2,7 @@ package wedro22.auctiopossum.blocks;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -33,6 +34,10 @@ public class Auctionator extends Block {
         setHarvestLevel("pickaxe", 1);
         setStepSound(soundTypeMetal);
         setBlockName("auctionator");
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void registerRenders(){
         setBlockTextureName("auctiopossum:auctionator_face");
     }
 
@@ -53,17 +58,5 @@ public class Auctionator extends Block {
     @Override
     protected void dropBlockAsItem(World world, int p_149642_2_, int p_149642_3_, int p_149642_4_, ItemStack p_149642_5_) {
         super.dropBlockAsItem(world, p_149642_2_, p_149642_3_, p_149642_4_, p_149642_5_);
-    }
-
-    //@SideOnly(Side.CLIENT)
-    /**
-     * установление текстуры только для клиента
-     */
-    @Override
-    public Block setBlockTextureName(String p_149658_1_) {
-        if(FMLCommonHandler.instance().getEffectiveSide()==Side.CLIENT){//только клиент
-            return super.setBlockTextureName(p_149658_1_);
-        } else
-            return this;
     }
 }
