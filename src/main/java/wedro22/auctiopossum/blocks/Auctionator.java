@@ -10,6 +10,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import wedro22.auctiopossum.Auctiopossum;
+import wedro22.auctiopossum.gui.GuiHandlerAuc;
 
 /**
  * блок Аукционатор для ведения торговли по пкм
@@ -43,16 +45,18 @@ public class Auctionator extends Block {
 
 
     @Override
-    public boolean onBlockActivated(World world, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer entityPlayer, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer,
+                                    int side, float clickX, float clickY, float clickZ) {
         if (world.isRemote)
-        {
+            return false;
+        Block block = world.getBlock(x, y, z);
+        if (block == null || entityPlayer == null)
+            return false;
+        if (!entityPlayer.isSneaking()) { //если игрок не сидит
+            entityPlayer.openGui(Auctiopossum.instance, GuiHandlerAuc.AUC_GUI_ID, world, 0, 0, 0);
             return true;
         }
-        else
-        {
-            // TODO: 17.02.2019  
-            return true;
-        }
+        return false;
     }
 
     @Override

@@ -12,7 +12,7 @@ public class ContainerAuc extends Container {
     //InventoryAuc inventoryLeft = new InventoryAuc(this, 8);
     /** The crafting matrix inventory (3x3). */
     public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
-    public IInventory craftResult = null;
+    public IInventory craftResult = new InventoryCraftResult();
 
     private World worldObj;
     private int posX;

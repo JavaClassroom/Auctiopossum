@@ -10,13 +10,17 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.command.CommandBase;
 import wedro22.auctiopossum.blocks.Auctionator;
-import wedro22.auctiopossum.gui.AucGuiHandler;
+import wedro22.auctiopossum.gui.GuiHandlerAuc;
 
 @Mod(modid = Auctiopossum.MODID, version = Auctiopossum.VERSION)
 public class Auctiopossum
 {
     public static final String MODID = "auctiopossum";
     public static final String VERSION = "1.0";
+
+    @Mod.Instance("auctiopossum")
+    public static Auctiopossum instance;
+
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -31,7 +35,7 @@ public class Auctiopossum
         Auctionator.get().registerRenders();
         // register CommonProxy as our GuiHandler
         //NetworkRegistry.instance().registerGuiHandler(this, new CommonProxy());
-        NetworkRegistry.INSTANCE.registerGuiHandler(this, new AucGuiHandler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandlerAuc());
     }
 
     @EventHandler
