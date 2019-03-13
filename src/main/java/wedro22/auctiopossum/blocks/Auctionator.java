@@ -1,6 +1,7 @@
 package wedro22.auctiopossum.blocks;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -53,6 +54,7 @@ public class Auctionator extends Block {
         if (block == null || entityPlayer == null)
             return false;
         if (!entityPlayer.isSneaking()) { //если игрок не сидит
+            Auctiopossum.logger.info("Auctionator onBlockActivated");
             entityPlayer.openGui(Auctiopossum.instance, GuiHandlerAuc.AUC_GUI_ID, world, 0, 0, 0);
             return true;
         }

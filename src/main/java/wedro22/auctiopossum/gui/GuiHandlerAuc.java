@@ -3,6 +3,7 @@ package wedro22.auctiopossum.gui;
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import wedro22.auctiopossum.Auctiopossum;
 
 public class GuiHandlerAuc implements IGuiHandler {
     public static final int AUC_GUI_ID = 0;
@@ -13,6 +14,7 @@ public class GuiHandlerAuc implements IGuiHandler {
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == AUC_GUI_ID){
+            Auctiopossum.logger.info("GuiHandler server");
             return new ContainerAuc(player.inventory, world, x, y, z);
         }
         return null;
@@ -24,6 +26,7 @@ public class GuiHandlerAuc implements IGuiHandler {
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == AUC_GUI_ID){
+            Auctiopossum.logger.info("GuiHandler client");
             return new GuiContainerAuc(player.inventory, world, x, y, z);
         }
         return null;

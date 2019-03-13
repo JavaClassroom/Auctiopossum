@@ -2,17 +2,15 @@ package wedro22.auctiopossum.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import wedro22.auctiopossum.blocks.Auctionator;
 
 public class ContainerAuc extends Container {
 
-    //InventoryAuc inventoryLeft = new InventoryAuc(this, 8);
-    /** The crafting matrix inventory (3x3). */
-    public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
-    public IInventory craftResult = new InventoryCraftResult();
+    /** The crafting matrix inventory. */
+    public InventoryAuc inventoryAuc = new InventoryAuc(this, 8);
 
     private World worldObj;
     private int posX;
@@ -24,58 +22,31 @@ public class ContainerAuc extends Container {
         posX = x;
         posY = y;
         posZ = z;
-        this.addSlotToContainer(new SlotCrafting(inventoryPlayer.player, this.craftMatrix, this.craftResult, 0, 124, 35));
-        int l;
-        int i1;
 
-        for (l = 0; l < 3; ++l)
-        {
-            for (i1 = 0; i1 < 3; ++i1)
-            {
-                //Slot(IInventory, slotIndex, xDisplay, yDisplay)
-                this.addSlotToContainer(new Slot(this.craftMatrix, i1 + l * 3, 30 + i1 * 18, 17 + l * 18));
-            }
-        }
+        this.addSlotToContainer(new Slot(inventoryPlayer, 0, 87, 8));
+        this.addSlotToContainer(new Slot(inventoryPlayer, 1, 87, 26));
+        this.addSlotToContainer(new Slot(inventoryPlayer, 2, 87, 44));
+        this.addSlotToContainer(new Slot(inventoryPlayer, 3, 87, 62));
+        this.addSlotToContainer(new Slot(inventoryPlayer, 4, 109, 8));
+        this.addSlotToContainer(new Slot(inventoryPlayer, 5, 109, 26));
+        this.addSlotToContainer(new Slot(inventoryPlayer, 6, 109, 44));
+        this.addSlotToContainer(new Slot(inventoryPlayer, 7, 109, 62));
 
-        for (l = 0; l < 3; ++l)
-        {
-            for (i1 = 0; i1 < 9; ++i1)
-            {
-                this.addSlotToContainer(new Slot(inventoryPlayer, i1 + l * 9 + 9, 8 + i1 * 18, 84 + l * 18));
-            }
-        }
+        // TODO: 13.03.2019 добавить слоты инвентаря игрока
 
-        for (l = 0; l < 9; ++l)
-        {
-            this.addSlotToContainer(new Slot(inventoryPlayer, l, 8 + l * 18, 142));
-        }
-
-        this.onCraftMatrixChanged(this.craftMatrix);
     }
-
-    /**
-     * Callback for when the crafting matrix is changed.
-     */
-    /*public void onCraftMatrixChanged(IInventory p_75130_1_)
-    {
-        this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, this.worldObj));
-    }*/
 
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer entityPlayer)
-    {
+    public void onContainerClosed(EntityPlayer entityPlayer) {
         super.onContainerClosed(entityPlayer);
 
-        if (!this.worldObj.isRemote)
-        {
-            for (int i = 0; i < 9; ++i)
-            {
-                ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
+        if (!this.worldObj.isRemote) {
+            for (int i = 0; i < this.inventoryAuc.getSizeInventory(); ++i) {
+                ItemStack itemstack = this.inventoryAuc.getStackInSlotOnClosing(i);
 
-                if (itemstack != null)
-                {
+                if (itemstack != null) {
                     entityPlayer.dropPlayerItemWithRandomChoice(itemstack, false);
                 }
             }
@@ -85,74 +56,8 @@ public class ContainerAuc extends Container {
     /** Может ли взаимодействовать с игроком */
     @Override
     public boolean canInteractWith(EntityPlayer entityPlayer) {
-        return this.worldObj.getBlock(this.posX, this.posY, this.posZ) != Blocks.crafting_table ?
-                false :
-                entityPlayer.getDistanceSq((double)this.posX + 0.5D, (double)this.posY + 0.5D, (double)this.posZ + 0.5D) <= 64.0D;
+        net.minecraft.block.Block block = this.worldObj.getBlock(this.posX, this.posY, this.posZ);
+        return block != Auctionator.get() ? false : entityPlayer.getDistanceSq((double)this.posX + 0.5D, (double)this.posY + 0.5D, (double)this.posZ + 0.5D) <= 64.0D;
     }
 
-    /**
-     * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
-     */
-    public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int index)
-    {
-        ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(index);
-
-        if (slot != null && slot.getHasStack())
-        {
-            ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
-
-            if (index == 0)
-            {
-                if (!this.mergeItemStack(itemstack1, 10, 46, true))
-                {
-                    return null;
-                }
-
-                slot.onSlotChange(itemstack1, itemstack);
-            }
-            else if (index >= 10 && index < 37)
-            {
-                if (!this.mergeItemStack(itemstack1, 37, 46, false))
-                {
-                    return null;
-                }
-            }
-            else if (index >= 37 && index < 46)
-            {
-                if (!this.mergeItemStack(itemstack1, 10, 37, false))
-                {
-                    return null;
-                }
-            }
-            else if (!this.mergeItemStack(itemstack1, 10, 46, false))
-            {
-                return null;
-            }
-
-            if (itemstack1.stackSize == 0)
-            {
-                slot.putStack((ItemStack)null);
-            }
-            else
-            {
-                slot.onSlotChanged();
-            }
-
-            if (itemstack1.stackSize == itemstack.stackSize)
-            {
-                return null;
-            }
-
-            slot.onPickupFromSlot(entityPlayer, itemstack1);
-        }
-
-        return itemstack;
-    }
-
-    public boolean func_94530_a(ItemStack itemStack, Slot slot)
-    {
-        return slot.inventory != this.craftResult && super.func_94530_a(itemStack, slot);
-    }
 }

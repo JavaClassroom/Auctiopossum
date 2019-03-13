@@ -34,7 +34,6 @@ public class Control {
 
         @Override
         public void processCommand(ICommandSender sender, String[] args) {
-            System.out.println("AUCTION");
             EntityPlayer entityplayer = getCommandSenderAsPlayer(sender);
             ItemStack is = new ItemStack(Auctionator.get());
             entityplayer.inventory.addItemStackToInventory(is);
