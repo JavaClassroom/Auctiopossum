@@ -6,6 +6,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
+import wedro22.auctiopossum.Auctiopossum;
 
 public class GuiContainerAuc extends GuiContainer {
 
