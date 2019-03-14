@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 import wedro22.auctiopossum.Auctiopossum;
 
 public class GuiHandlerAuc implements IGuiHandler {
-    public static final int AUC_GUI_ID = 356181399;
+    public static final int AUC_GUI_ID = 0;
 
     /**
      * Вызов контейнера при его открытии.

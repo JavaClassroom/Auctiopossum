@@ -55,7 +55,7 @@ public class Auctionator extends Block {
             return false;
         if (!entityPlayer.isSneaking()) { //если игрок не сидит
             Auctiopossum.logger.info("Auctionator onBlockActivated");
-            entityPlayer.openGui(Auctiopossum.instance, GuiHandlerAuc.AUC_GUI_ID, world, 0, 0, 0);
+            entityPlayer.openGui(Auctiopossum.instance, GuiHandlerAuc.AUC_GUI_ID, world, x, y, z);
             return true;
         }
         return false;

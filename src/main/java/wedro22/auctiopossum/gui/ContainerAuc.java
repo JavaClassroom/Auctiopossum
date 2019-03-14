@@ -46,7 +46,7 @@ public class ContainerAuc extends Container {
         String str = "Container onContainerClosed";
         super.onContainerClosed(entityPlayer);
         if (!this.worldObj.isRemote) {
-            str += " !isRemote";
+            str += " isRemote=false";
             for (int i = 0; i < this.inventoryAuc.getSizeInventory(); ++i) {
                 ItemStack itemstack = this.inventoryAuc.getStackInSlotOnClosing(i);
                 if (itemstack != null) {
@@ -54,29 +54,20 @@ public class ContainerAuc extends Container {
                 }
             }
         } else
-            str += " isRemote";
+            str += " isRemote=true";
         Auctiopossum.logger.info(str);
     }
 
     /** Может ли взаимодействовать с игроком */
     @Override
     public boolean canInteractWith(EntityPlayer entityPlayer) {
-        Auctiopossum.logger.info("Container canInteractWith");
-        return true;
-        // TODO: 14.03.2019 проверки на мир разнятся сервер/клиент не_удален/удален, позиции = 0 0 0
-        /*String str = "Container canInteractWith:";
+        //Auctiopossum.logger.info("Container canInteractWith");
+        //return true;
         net.minecraft.block.Block block = this.worldObj.getBlock(this.posX, this.posY, this.posZ);
         if (block == Auctionator.get()){
-            str += " true_block";
-            if (entityPlayer.getDistanceSq((double)this.posX + 0.5D, (double)this.posY + 0.5D, (double)this.posZ + 0.5D) <= 64.0D){
-                str += " true_distance = true";
-                Auctiopossum.logger.info(str);
-                return true;
-            }
+            return entityPlayer.getDistanceSq((double) this.posX + 0.5D, (double) this.posY + 0.5D, (double) this.posZ + 0.5D) <= 64.0D;
         }
-        str += " = false";
-        Auctiopossum.logger.info(str);
-        return false;*/
+        return false;
     }
 
 }
