@@ -1,3 +1,4 @@
-tile.auctionator.name=Auctionator
+tile.auctionator.name=Аукционатор
 
-container.auctionator=Auctionator
+container.auctionator=Аукционатор
+container.auction=Аукцион

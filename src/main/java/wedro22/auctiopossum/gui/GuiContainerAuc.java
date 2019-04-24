@@ -11,9 +11,12 @@ import wedro22.auctiopossum.Auctiopossum;
 public class GuiContainerAuc extends GuiContainer {
 
     /** Текстура GUI */
-    //private static final ResourceLocation textures = new ResourceLocation(MODID, "textures/gui/container/<name>.png");
-    private static final ResourceLocation craftingTableGuiTextures =
-            new ResourceLocation("textures/gui/container/crafting_table.png");
+    private static final ResourceLocation texture =
+            new ResourceLocation(Auctiopossum.MODID, "textures/gui/container/auctionator.png");
+    /** Размеры интерфейса */
+    private static final int WIDTH = 256, HEIGHT = 256;
+    /** Смещение начала координат в интерфейсе из-за нестандартного размера */
+    private static final int X = (176 - WIDTH)/2, Y = (166 - HEIGHT)/2;
 
     public GuiContainerAuc(InventoryPlayer inventoryPlayer, World world, int x, int y, int z)
     {
@@ -26,11 +29,11 @@ public class GuiContainerAuc extends GuiContainer {
      */
     protected void drawGuiContainerForegroundLayer(int x, int y)
     {
-        this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]),
-                28, 6, 4210752);
+        this.fontRendererObj.drawString(I18n.format("container.auction", new Object[0]),
+                X+5, Y+156, 4210752);
         // Отрисовать название инвентаря игрока, где оно обычно находится.
-        this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]),
-                8, this.ySize - 96 + 2, 4210752);
+        /*this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]),
+                8, this.ySize - 96 + 2, 4210752);*/
     }
 
     /**
@@ -42,9 +45,9 @@ public class GuiContainerAuc extends GuiContainer {
         // Окрасить все в белый цвет и в полную непрозрачность
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         // Привязать текстуру
-        this.mc.getTextureManager().bindTexture(craftingTableGuiTextures);
-        int k = (this.width - this.xSize) / 2;
-        int l = (this.height - this.ySize) / 2;
-        this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
+        this.mc.getTextureManager().bindTexture(texture);
+        this.drawTexturedModalRect(guiLeft+X, guiTop+Y,
+                0, 0, 256, 256);
+
     }
 }

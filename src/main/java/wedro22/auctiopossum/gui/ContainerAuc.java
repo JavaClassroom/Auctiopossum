@@ -40,6 +40,14 @@ public class ContainerAuc extends Container {
     }
 
     /**
+     * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
+     */
+    public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int index)
+    {
+        return null;
+    }
+
+    /**
      * Called when the container is closed.
      */
     public void onContainerClosed(EntityPlayer entityPlayer) {
@@ -61,8 +69,6 @@ public class ContainerAuc extends Container {
     /** Может ли взаимодействовать с игроком */
     @Override
     public boolean canInteractWith(EntityPlayer entityPlayer) {
-        //Auctiopossum.logger.info("Container canInteractWith");
-        //return true;
         net.minecraft.block.Block block = this.worldObj.getBlock(this.posX, this.posY, this.posZ);
         if (block == Auctionator.get()){
             return entityPlayer.getDistanceSq((double) this.posX + 0.5D, (double) this.posY + 0.5D, (double) this.posZ + 0.5D) <= 64.0D;
